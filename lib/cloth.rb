@@ -1,10 +1,10 @@
 class Cloth
-  attr_reader :name, :type
+  attr_reader :cloth_name, :type
   def initialize(file)
     file = File.new(file, "r:UTF-8")
     results = file.readlines
     file.close
-    @name = results[0].chomp
+    @cloth_name = results[0].chomp
     @type = results[1].chomp
     range = results[2].delete('('')''\n').split(', ')
     @temp_from = range[0].to_i
@@ -12,6 +12,7 @@ class Cloth
   end
 
   def temperature_between?(temperature)
-    return if temperature.between?(@temp_from..@temp_to)
+    return (@temp_from..@temp_to).include?(temperature)
   end
+
 end

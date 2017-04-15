@@ -1,11 +1,10 @@
 class ClothesReader
-  def initialize(path)
-    unless File.exist?(path)
-      abort "Файл с результатами #{path} не найден."
+  attr_reader :things
+  def initialize(clothes_path)
+    @things = []
+    for item in clothes_path do
+      file = Cloth.new(item)
+      @things << file
     end
-
-    file = File.new(results_path, "r:UTF-8")
-    @results = file.readlines
-    file.close
   end
 end

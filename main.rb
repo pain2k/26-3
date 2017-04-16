@@ -9,25 +9,21 @@ end
 
 require_relative "lib/clothes_reader"
 require_relative "lib/cloth"
-require_relative "lib/clothes_collection"
-#require_relative "lib/result_printer"
 
 VERSION = "Программа рекомендует одежду по погоду. Версия 1.0"
 
 current_path = File.dirname(__FILE__)
-
-clothes_collection = ClothesReader.new(current_path)
+clothes = ClothesReader.new(current_path)
 
 puts "Сколько градусов за окном? (можно с минусом):"
 print ">"
 temperature = STDIN.gets.to_i
 
-cloth_types_uniq = clothes_collection.things.map { |cloth| cloth.type } .uniq!
+cloth_types_uniq = clothes.collection.map { |cloth| cloth.type } .uniq!
 
 puts "Рекомендуем следующую одежду:"
 for item in cloth_types_uniq
-  cloth_by_temp = clothes_collection.things.find_all { |cloth| (cloth.type == item && cloth.temperature_between?(temperature) == true) }
-  #puts cloth_by_temp
+  cloth_by_temp = clothes.collection.find_all { |cloth| (cloth.type == item && cloth.temperature_between?(temperature)) }
   if cloth_by_temp.size == 0
     puts "#{item}: нет подходящих предметов"
   else

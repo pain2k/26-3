@@ -1,12 +1,12 @@
 class ClothesReader
-  attr_reader :things
+  attr_reader :collection
   def initialize(current_path)
     clothes_path = Dir.glob(current_path + "/data/*.txt")
 
-    @things = []
+    @collection = []
     for item in clothes_path do
       file = Cloth.new(item)
-      @things << file
+      @collection << file
     end
   end
 end

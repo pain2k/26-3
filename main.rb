@@ -7,26 +7,16 @@ if Gem.win_platform?
   end
 end
 
-require_relative "lib/clothes_reader"
 require_relative "lib/cloth"
+require_relative "lib/clothes_collection"
 
 VERSION = "Программа рекомендует одежду по погоду. Версия 1.0"
 
+
 current_path = File.dirname(__FILE__)
-clothes = ClothesReader.new(current_path)
+clothes_collection = ClothesCollection.new(current_path)
 
 puts "Сколько градусов за окном? (можно с минусом):"
 print ">"
 temperature = STDIN.gets.to_i
-
-cloth_types_uniq = clothes.collection.map { |cloth| cloth.type } .uniq!
-
-puts "Рекомендуем следующую одежду:"
-for item in cloth_types_uniq
-  cloth_by_temp = clothes.collection.find_all { |cloth| (cloth.type == item && cloth.temperature_between?(temperature)) }
-  if cloth_by_temp.size == 0
-    puts "#{item}: нет подходящих предметов"
-  else
-    puts "#{item}: #{cloth_by_temp.sample.cloth_name}"
-  end
-end
+clothes_collection.recommend_by_temp(temperature)

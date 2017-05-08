@@ -1,35 +1,25 @@
 class ClothesCollection
+  attr_reader :types_uniq
   def initialize(current_path)
     @collection = []
     @current_path = current_path
     read_from_files
     @types_uniq = []
-    types_uniq
+    types_uniq_calc
   end
 
   def read_from_files
     clothes_path = Dir.glob(@current_path + "/data/*.txt")
-    for item in clothes_path do
-      cloth = Cloth.new(item)
-      @collection << cloth
-    end
+    clothes_path.each { |dir| @collection << Cloth.new(dir) }
   end
 
-  def types_uniq
+  def types_uniq_calc
     @collection.each do |cloth|
       @types_uniq << cloth.type unless @types_uniq.include?(cloth.type)
     end
   end
 
-  def recommend_by_temp(temperature)
-    for item in @types_uniq
-      cloth_by_temp = @collection.find_all { |cloth| cloth.type == item && cloth.temperature_between?(temperature) }
-      if cloth_by_temp.size == 0
-        puts "#{item}: нет подходящих предметов"
-      else
-        puts "#{item}: #{cloth_by_temp.sample.cloth_name}"
-      end
-    end
-
+  def recommend_by_temp(temperature,thing)
+    return @collection.select { |cloth| cloth.type == thing && cloth.temperature_between?(temperature) }
   end
 end

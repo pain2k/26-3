@@ -5,7 +5,7 @@ class Cloth
 
     @name = results[0].chomp
     @type = results[1].chomp
-    range = results[2].delete('('')').split(', ')
+    range = results[2].delete('()').split(', ')
     @temp_from = range[0].to_i
     @temp_to = range[1].to_i
   end

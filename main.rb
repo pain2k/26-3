@@ -20,10 +20,10 @@ puts "Сколько градусов за окном? (можно с минус
 print ">"
 temperature = STDIN.gets.to_i
 
-clothes_uniq.each_with_index do |cloth_type, i|
-  if clothes_collection.recommend_by_temp(temperature,cloth_type).size == 0
-    puts "#{i + 1}. #{cloth_type}: Нет подходящих предметов"
+clothes_uniq.each do |cloth_type|
+  if clothes_collection.recommend_by_temp(temperature,cloth_type).empty?
+    puts "#{cloth_type}: Нет подходящих предметов"
   else
-    puts "#{i + 1}. #{cloth_type}: #{clothes_collection.recommend_by_temp(temperature,cloth_type).sample.name}"
+    puts "#{cloth_type}: #{clothes_collection.recommend_by_temp(temperature,cloth_type).sample.name}"
   end
 end

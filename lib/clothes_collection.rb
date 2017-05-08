@@ -19,7 +19,7 @@ class ClothesCollection
     end
   end
 
-  def recommend_by_temp(temperature,thing)
-    return @collection.select { |cloth| cloth.type == thing && cloth.temperature_between?(temperature) }
+  def recommend_by_temp(temperature,thing_type)
+    return @collection.select { |cloth| cloth.type == thing_type && cloth.temperature_between?(temperature) }
   end
 end
